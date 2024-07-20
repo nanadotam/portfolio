@@ -62,3 +62,5 @@ It will appear after 5 seconds in a fade in style
 
 ## Bottom Page
 - Place the GitHub, and external icons in the center
+
+YUP THAT'S ABOUT IT FOR NOW
