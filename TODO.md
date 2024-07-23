@@ -1,5 +1,8 @@
 # Things to Change (My Vision)
 
+-> FIX THE PREVIEW PAGE
+
+
 ## Links
 - LinkedIn, GitHub, Medium: at the top of the page too
 
