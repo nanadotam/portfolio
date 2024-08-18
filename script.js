@@ -113,6 +113,7 @@ logosWrappers.forEach(async (logoWrapper, i) => {
 
 yearEl.textContent = new Date().getFullYear();
 
+
 // Matrix Effect
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
@@ -121,8 +122,11 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
-const drops = Array(columns).fill(1);
+let columns = Math.floor(canvas.width / fontSize);
+let drops = Array(columns).fill(1);
+
+const nameText = "NANA AMOAKO";
+let isMorphing = false;
 
 function drawMatrix() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -132,7 +136,14 @@ function drawMatrix() {
     ctx.font = `${fontSize}px monospace`;
 
     drops.forEach((y, i) => {
-        const text = String.fromCharCode(65 + Math.random() * 33);
+        let text;
+
+        if (isMorphing) {
+            text = nameText[i % nameText.length];
+        } else {
+            text = String.fromCharCode(65 + Math.random() * 33);
+        }
+
         ctx.fillText(text, i * fontSize, y * fontSize);
 
         if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
@@ -140,7 +151,13 @@ function drawMatrix() {
     });
 }
 
+// Start the Matrix effect
 setInterval(drawMatrix, 50);
+
+// Trigger the morphing effect after 5 seconds
+setTimeout(() => {
+    isMorphing = true;
+}, 5000);
 
 // Handle resizing
 window.addEventListener('resize', () => {
