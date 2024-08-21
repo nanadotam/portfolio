@@ -541,6 +541,7 @@ body.light .header {
   transform: translateY(-50%);
 } */
 
+
 .header-textbox {
   position: absolute;
   top: 50%;
@@ -582,13 +583,28 @@ body.light .header {
 
 @media (max-width: 400px) {
   .header-textbox {
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     padding-inline: 0.6rem;
   }
   .header-btns {
     flex-direction: column;
     width: 80%;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 390px) {
+  .header-textbox {
+    width: 100%;
+    padding-inline: 1rem;
+  }
+  .header-text {
+    font-size: var(--text-medium);
+  }
+  .header-btns {
+    width: 90%;
   }
 }
 
