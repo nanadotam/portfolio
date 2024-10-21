@@ -1357,6 +1357,9 @@ input:checked {
 
 
 /* --------------------------------- */
+/* ----- Project Section -----*/
+/* --------------------------------- */
+
 .project-card {
   flex: 0 0 400px; /* Fixed width, no shrink */
   display: flex;
@@ -1444,4 +1447,19 @@ input:checked {
   padding: var(--gutter-medium);
   gap: var(--gutter-small);
 
+}
+
+/* ----- Responsive Adjustments -----*/
+
+/* Adjust the project card width for smaller screens */
+@media (max-width: 768px) {
+  .project-card {
+    max-width: 300px; /* Reduce the card width for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    max-width: 100%; /* Make the card full-width on mobile */
+  }
 }
