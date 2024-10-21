@@ -158,26 +158,26 @@ const speedFactor = 0.55; // Value between 0 and 1; lower is slower
 function drawMatrix() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+
   ctx.fillStyle = '#0F0';
   ctx.font = `${fontSize}px monospace`;
 
   drops.forEach((y, i) => {
-      let text;
-      if (isMorphing) {
-          text = nameText[i % nameText.length];
-      } else {
-          text = String.fromCharCode(65 + Math.random() * 33);
-      }
+    let text;
+    if (isMorphing) {
+      text = nameText[i % nameText.length];
+    } else {
+      text = String.fromCharCode(65 + Math.random() * 33);
+    }
 
-      ctx.fillText(text, i * fontSize, y * fontSize);
+    ctx.fillText(text, i * fontSize, y * fontSize);
 
-      // Apply the speed factor to slow down the drops
-      if (Math.random() < speedFactor) {
-          drops[i]++;
-      }
+    // Apply the speed factor to slow down the drops
+    if (Math.random() < speedFactor) {
+      drops[i]++;
+    }
 
-      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
   });
 
   animationFrameId = requestAnimationFrame(drawMatrix);
@@ -188,36 +188,38 @@ animationFrameId = requestAnimationFrame(drawMatrix);
 
 // Trigger the morphing effect after 5 seconds
 setTimeout(() => {
-    isMorphing = true;
+  isMorphing = true;
 }, 5000);
 
 // Debounce resizing to maintain the drops' state
 let resizeTimeout;
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        const oldColumns = columns;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        columns = Math.floor(canvas.width / fontSize);
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    const oldColumns = columns;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
 
-        // Preserve existing values when adjusting the drops array
-        if (columns > oldColumns) {
-            drops = [...drops, ...Array(columns - oldColumns).fill(1)];
-        } else {
-            drops = drops.slice(0, columns);
-        }
-    }, 100);
+    // Preserve existing values when adjusting the drops array
+    if (columns > oldColumns) {
+      drops = [...drops, ...Array(columns - oldColumns).fill(1)];
+    } else {
+      drops = drops.slice(0, columns);
+    }
+  }, 100);
 });
 
 // Pause animation when window is not in focus (optimize performance)
 window.addEventListener('blur', () => {
-    cancelAnimationFrame(animationFrameId);
+  cancelAnimationFrame(animationFrameId);
 });
 
 window.addEventListener('focus', () => {
-    animationFrameId = requestAnimationFrame(drawMatrix);
+  animationFrameId = requestAnimationFrame(drawMatrix);
 });
+
+
 
 // ###################################
 // Fetch and Display Featured Repositories
@@ -271,11 +273,15 @@ async function fetchRepos() {
           <p>${repo.description || 'No description provided'}</p>
         `;
 
+        // Create the actions section with GitHub link and logo
         const projectActions = document.createElement('div');
         projectActions.classList.add('project-actions');
         projectActions.innerHTML = `
-          <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-        `;
+        <a href="${repo.html_url}" target="_blank">
+          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
+          View on GitHub
+        </a>
+      `;
 
         projectCard.appendChild(projectImage);
         projectCard.appendChild(projectDetails);
