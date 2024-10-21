@@ -1399,6 +1399,9 @@ input:checked {
 }
 
 .project-details h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Add space between the logo and the text */
   margin: 0 0 var(--gutter-nano);
   font-size: var(--h3);
   color: var(--important);
@@ -1442,8 +1445,10 @@ input:checked {
 }
 
 .github-logo {
-  width: 1rem; /* Adjust the size of the GitHub logo */
-  height: 1rem;
+  width: 1.5rem; /* Adjust size as needed */
+  height: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .project-list {
@@ -1454,7 +1459,7 @@ input:checked {
   color: var(--important);
   padding: var(--gutter-medium);
   gap: var(--gutter-small);
-
+  
 }
 
 /* ----- Responsive Adjustments -----*/

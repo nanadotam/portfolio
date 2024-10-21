@@ -266,26 +266,26 @@ async function fetchRepos() {
         projectImage.classList.add('project-image');
         projectImage.style.backgroundImage = `url('${gradientImage}')`;
 
+        // Choose the logo based on the theme
+        const isDarkTheme = document.body.classList.contains('dark');
+        const logoSrc = isDarkTheme
+          ? 'assets/images/github-logo/GitHub_Invertocat_Light.svg'
+          : 'assets/images/github-logo/GitHub_Invertocat_Dark.svg';
+
+        // Create the details section with the logo before the repository name
         const projectDetails = document.createElement('div');
         projectDetails.classList.add('project-details');
         projectDetails.innerHTML = `
-          <h3>${repo.name}</h3>
+          <h3>
+            <img src="${logoSrc}" alt="GitHub Logo" class="github-logo">
+            ${repo.name}
+          </h3>
           <p>${repo.description || 'No description provided'}</p>
         `;
 
-        // Create the actions section with GitHub link and logo
-        const projectActions = document.createElement('div');
-        projectActions.classList.add('project-actions');
-        projectActions.innerHTML = `
-        <a href="${repo.html_url}" target="_blank">
-          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
-          View on GitHub
-        </a>
-      `;
-
+        // Append sections to the card
         projectCard.appendChild(projectImage);
         projectCard.appendChild(projectDetails);
-        projectCard.appendChild(projectActions);
         repoContainer.appendChild(projectCard);
       }
     });
