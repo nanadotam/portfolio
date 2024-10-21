@@ -7,7 +7,7 @@ const navMenu = document.querySelector(".nav-items");
 // const btnToggleNav = document.querySelector(".menu-btn");
 const mainEl = document.querySelector("main");
 
-document.querySelector('.menu-btn').addEventListener('click', function() {
+document.querySelector('.menu-btn').addEventListener('click', function () {
   document.querySelector('.menu-btn-container').classList.toggle('active');
 });
 
@@ -288,9 +288,19 @@ async function fetchRepos() {
 
         // Choose the logo based on the theme
         const isDarkTheme = document.body.classList.contains('dark');
-        const logoSrc = isDarkTheme
-          ? 'assets/images/github-logo/GitHub_Invertocat_Light.svg'
-          : 'assets/images/github-logo/GitHub_Invertocat_Dark.svg';
+        let logoSrc;
+
+        if (isDarkTheme) {
+          logoSrc = 'assets/images/github-logo/GitHub_Invertocat_Light.svg';
+        } else {
+          logoSrc = 'assets/images/github-logo/GitHub_Invertocat_Dark.svg';
+        }
+
+        // Update the logo image source
+        const logoImage = document.querySelector('#logo-image');
+        if (logoImage) {
+          logoImage.src = logoSrc;
+        }
 
         // Create the details section with the logo before the repository name
         const projectDetails = document.createElement('div');
