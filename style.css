@@ -143,16 +143,20 @@ textarea {
   position: relative;
   overflow: hidden; /* Ensure the canvas does not overflow */
 }
-
 .header-textbox {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
-  color: var(--important); /* Use variable for text color */
   text-align: center;
-  padding-top: 20%;
-  background-color: var(--header-bg-overlay); /* Use variable for dynamic overlay */
-  padding: 20px;
-  border-radius: var(--gutter-small); /* Use the existing radius variable */
+  padding: var(--gutter-medium);
+  background-color: var(--bg-color-secondary); /* Adapt background to theme */
+  border-radius: var(--radius); /* Consistent border radius */
+  border: 0.2rem solid var(--border-dark); /* Consistent border style */
+  box-shadow: var(--shadow); /* Consistent shadow effect */
+  transition: background-color 0.6s var(--easing), box-shadow 0.6s var(--easing);
+  color: var(--important); /* Adapt text color to theme */
 }
 
 .header-textbox h1,
@@ -467,32 +471,101 @@ main {
 /* ----- Menu Button -----*/
 /* --------------------------------- */
 
+/* --------------------------------- */
+/* ----- Menu Button -----*/
+/* --------------------------------- */
+
+/* Menu container: For larger screens */
 .menu-btn-container {
   position: fixed;
   width: 100%;
   top: var(--gutter-x-small);
   left: 0;
   z-index: 4;
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center;
+  gap: var(--gutter-large); /* Space between the buttons */
+  padding-inline: var(--gutter-medium); /* Space on the sides */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
+.nav-buttons {
+  display: flex;
+  gap: var(--gutter-large); /* Consistent spacing between buttons */
+}
+
+/* Style for individual buttons */
 .menu-btn {
   display: block;
-  margin-inline-start: auto;
   border: 1px solid var(--border-dark);
   inline-size: 132px;
   padding-block: var(--gutter-nano);
-  border-radius: var(--gutter-large);
-  text-decoration: none;
+  border-radius: var(--gutter-large); /* Rounded button style */
   background-color: var(--bg-color-secondary);
   color: var(--important);
   cursor: pointer;
+  text-align: center; /* Center text inside the button */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 900;
+  font-stretch: 125%;
 }
 
-.menu-btn,
-.nav-items a {
-  font-stretch: 125%;
-  font-weight: 900;
+.menu-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1.0rem 2.5rem rgba(0, 0, 0, 0.2);
 }
+
+/* Hide the 'Menu' button on larger screens */
+.menu-btn[data-menu="toggle"] {
+  display: none;
+}
+
+/* Highlight active tab */
+.nav-buttons .active::after {
+  content: '';
+  width: 50%;
+  height: 3px;
+  background-color: #ff511c;
+  display: flex;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  top: 5px; /* Adjust position to match the button */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .menu-btn-container {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-end; /* Align items to the right */
+    gap: var(--gutter-micro); /* Reduce gap on mobile */
+    right: var(--gutter-small); /* Align to right on mobile */
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    gap: var(--gutter-micro); /* Adjust gap for smaller screens */
+    width: 35%; /* Make buttons take full width */
+  }
+
+  .menu-btn {
+    width: 100%;
+    text-align: center; /* Center text inside each button */
+    display: none; /* Hide all buttons */
+    padding: var(--gutter-nano) var(--gutter-medium); /* Consistent padding */
+  }
+
+  .menu-btn:first-of-type {
+    display: block; /* Show the 'menu' button only */
+  }
+
+  .menu-btn-container.active .menu-btn {
+    display: block; /* Show all buttons when active */
+  }
+}
+
+
 
 /* --------------------------------- */
 /* ----- Navigation -----*/
@@ -559,28 +632,9 @@ main {
   position: relative;
 }
 
-/* body.dark .header {
-  background-image: linear-gradient(#0000008b, #000000e6),
-    url("assets/images/hero-bg.webp");
-}
-
-body.light .header {
-  background-image: linear-gradient(#ffffffa2, #ffffffe6),
-    url("assets/images/hero-bg-light.webp");
-} */
-
-/* .header-textbox {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-} */
 
 
 .header-textbox {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
   z-index: 1;
   color: white;

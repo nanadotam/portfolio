@@ -4,8 +4,29 @@
 
 const nav = document.querySelector(".nav");
 const navMenu = document.querySelector(".nav-items");
-const btnToggleNav = document.querySelector(".menu-btn");
+// const btnToggleNav = document.querySelector(".menu-btn");
 const mainEl = document.querySelector("main");
+
+document.querySelector('.menu-btn').addEventListener('click', function() {
+  document.querySelector('.menu-btn-container').classList.toggle('active');
+});
+
+
+// JavaScript to toggle the visibility of menu items
+document.addEventListener('DOMContentLoaded', () => {
+  const menuButton = document.querySelector('.menu-btn[data-menu="toggle"]');
+  const navButtons = document.querySelector('.nav-buttons');
+
+  menuButton.addEventListener('click', () => {
+    // Toggle the 'active' class on the container to show/hide menu items
+    navButtons.classList.toggle('active');
+    menuButton.textContent = navButtons.classList.contains('active') ? 'close' : 'menu';
+  });
+});
+
+
+
+// $$$$$$$$$$$$$$$
 
 // Toggle the visibility of the navigation menu
 const toggleNav = () => {
@@ -14,30 +35,30 @@ const toggleNav = () => {
   // Prevent screen from scrolling when menu is opened
   document.body.classList.toggle("lock-screen");
 
-  if (nav.classList.contains("hidden")) {
-    btnToggleNav.textContent = "menu";
-  } else {
-    // When menu is opened after transition change text respectively
-    setTimeout(() => {
-      btnToggleNav.textContent = "close";
-    }, 475);
-  }
+  // if (nav.classList.contains("hidden")) {
+  //   btnToggleNav.textContent = "menu";
+  // } else {
+  //   // When menu is opened after transition change text respectively
+  //   setTimeout(() => {
+  //     btnToggleNav.textContent = "close";
+  //   }, 475);
+  // }
 };
 
 // Add event listeners for menu toggle
-btnToggleNav.addEventListener("click", toggleNav);
-navMenu.addEventListener("click", (e) => {
-  if (e.target.localName === "a") {
-    toggleNav();
-  }
-});
+// btnToggleNav.addEventListener("click", toggleNav);
+// navMenu.addEventListener("click", (e) => {
+//   if (e.target.localName === "a") {
+//     toggleNav();
+//   }
+// });
 
-// Close the menu when pressing the 'Escape' key
-document.body.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !nav.classList.contains("hidden")) {
-    toggleNav();
-  }
-});
+// // Close the menu when pressing the 'Escape' key
+// document.body.addEventListener("keydown", (e) => {
+//   if (e.key === "Escape" && !nav.classList.contains("hidden")) {
+//     toggleNav();
+//   }
+// });
 
 // ###################################
 // Animating Work Instances on Scroll
@@ -100,12 +121,12 @@ switchThemeEl.addEventListener("click", () => {
 const lastFocusedEl = document.querySelector('a[data-focused="last-focused"]');
 
 // Ensure focus stays within the menu when it's opened
-document.body.addEventListener("keydown", (e) => {
-  if (e.key === "Tab" && document.activeElement === lastFocusedEl) {
-    e.preventDefault();
-    btnToggleNav.focus();
-  }
-});
+// document.body.addEventListener("keydown", (e) => {
+//   if (e.key === "Tab" && document.activeElement === lastFocusedEl) {
+//     e.preventDefault();
+//     btnToggleNav.focus();
+//   }
+// });
 
 // ###################################
 // Rotating Logos Animation
@@ -249,7 +270,6 @@ async function fetchRepos() {
   try {
     const response = await fetch('/.netlify/functions/fetchRepos');
     const repos = await response.json();
-    console.log(repos); // Inspect the list of fetched repositories
 
     repos.forEach((repo, index) => {
       if (featuredRepos.includes(repo.name)) {
