@@ -1,48 +1,3 @@
-/* Matrix Canvas */
-#matrix {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Place it behind the text */
-    background-color: black;
-}
-
-.header {
-    position: relative;
-    overflow: hidden; /* Ensure the canvas does not overflow */
-}
-
-.header-textbox {
-    position: relative;
-    z-index: 1;
-    color: white;
-    text-align: center;
-    padding-top: 20%;
-}
-
-.header-textbox {
-  background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent black background */
-  padding: 20px; /* Add some padding for spacing */
-  border-radius: 10px; /* Optional: rounding the corners */
-}
-
-/* Adjustments for your header content */
-.h1 span {
-    display: block;
-}
-
-.header-text {
-    font-size: var(--text-large);
-    font-weight: 400;
-    max-inline-size: 745px;
-    margin-block-start: var(--gutter-micro);
-    margin-block-end: var(--gutter-medium);
-}
-
-
-
 /* --------------------------------- */
 /* ----- Basic Setup -----*/
 /* --------------------------------- */
@@ -76,7 +31,7 @@
     radial-gradient(at 73% 11%, rgb(115, 255, 225) 0px, transparent 50%),
     radial-gradient(at 49% 37%, rgba(255, 249, 89, 0.695) 0px, transparent 50%),
     radial-gradient(at 70% 21%, rgba(58, 255, 186, 0.715) 0px, transparent 50%);
-  --easing: cubic-bezier(0.86, 0, 0.07, 1);
+  --easing: cubic-bezier(0.3, 0, 0.07, 1);
 
   --site-max-width: 1280px;
   --gutter-nano: 0.5rem;
@@ -90,6 +45,9 @@
 
   --scroll-padding: 4.375rem;
   --radius: 85px;
+
+  --header-bg-overlay-dark: rgba(0, 0, 0, 0.5); /* Dark theme overlay */
+  --header-bg-overlay-light: rgba(255, 255, 255, 0.75); /* Light theme overlay */
 }
 
 body.dark {
@@ -102,6 +60,7 @@ body.dark {
   --border-dark: #c0c0c02f;
   --gradient-border: linear-gradient(to left bottom, #777, #0e0d0d);
   --shadow: 0 1rem 1rem #00000040;
+  --header-bg-overlay: var(--header-bg-overlay-dark);
 }
 
 body.light {
@@ -114,6 +73,7 @@ body.light {
   --border-dark: #5e5e5e1f;
   --gradient-border: linear-gradient(to left bottom, #000000c6, #0e0d0d00);
   --shadow: 0 1rem 1rem rgba(0, 0, 0, 0.25);
+  --header-bg-overlay: var(--header-bg-overlay-light);
 }
 
 *,
@@ -164,6 +124,77 @@ img {
 textarea {
   resize: none;
 }
+
+/* --------------------------------- */
+/* ----- Matrix Effect -----*/
+/* --------------------------------- */
+
+#matrix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Place it behind the text */
+  background-color: var(--bg-color-primary); /* Use variable for theme compatibility */
+}
+
+.header {
+  position: relative;
+  overflow: hidden; /* Ensure the canvas does not overflow */
+}
+
+.header-textbox {
+  position: relative;
+  z-index: 1;
+  color: var(--important); /* Use variable for text color */
+  text-align: center;
+  padding-top: 20%;
+  background-color: var(--header-bg-overlay); /* Use variable for dynamic overlay */
+  padding: 20px;
+  border-radius: var(--gutter-small); /* Use the existing radius variable */
+}
+
+.header-textbox h1,
+.header-textbox p {
+  color: var(--important); /* Adapt to dark/light themes */
+}
+
+.header-text {
+  font-size: var(--text-large);
+  font-weight: 400;
+  max-inline-size: 745px;
+  margin-block-start: var(--gutter-micro);
+  margin-block-end: var(--gutter-medium);
+  color: var(--important); /* Ensure text color adapts to the theme */
+}
+
+.h1 span {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  animation: typing 3.5s steps(40, end);
+  color: var(--important); /* Adapt text color */
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.h1 span::after {
+  content: '|';
+  animation: blink 0.7s infinite;
+  color: var(--important); /* Adapt to current theme */
+}
+
+@keyframes blink {
+  50% { opacity: 0 }
+}
+
+
+
 
 /* --------------------------------- */
 /* ----- Typography -----*/
@@ -512,6 +543,9 @@ main {
   transform: scale(1);
 }
 
+
+
+
 /* --------------------------------- */
 /* ----- Header -----*/
 /* --------------------------------- */
@@ -550,10 +584,6 @@ body.light .header {
   text-align: center;
   z-index: 1;
   color: white;
-}
-
-.h1 span {
-  display: block;
 }
 
 .header-text {
@@ -1323,4 +1353,95 @@ body.dark .footer-link img {
 input:checked {
   --thumb-position: 100%;
   background-color: var(--track-active);
+}
+
+
+/* --------------------------------- */
+.project-card {
+  flex: 0 0 400px; /* Fixed width, no shrink */
+  display: flex;
+  max-width: 400px; /* Ensures the card doesn't expand */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--radius);
+  border: .2rem solid var(--border-dark);
+  overflow: hidden;
+  transition: transform 0.6s var(--easing), box-shadow 0.6s var(--easing);
+  cursor: pointer;
+  background: var(--bg-color-secondary);
+  color: var(--important);
+  box-shadow: var(--shadow);
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1.0rem 2.5rem rgba(0, 0, 0, 0.4);
+}
+
+.project-image {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.project-details {
+  padding: var(--gutter-micro);
+  text-align: left;
+  transition: all 0.3s var(--easing);
+}
+
+.project-details h3 {
+  margin: 0 0 var(--gutter-nano);
+  font-size: var(--h3);
+  color: var(--important);
+}
+
+.project-details p {
+  font-size: var(--text-medium);
+  margin: 0 0 var(--gutter-nano);
+  color: var(--sub);
+}
+
+.project-details .date {
+  font-size: var(--text-small);
+  color: var(--body);
+}
+
+.project-details .tech-stack {
+  font-size: var(--text-small);
+  color: var(--sub);
+}
+
+.project-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--gutter-nano) var(--gutter-micro) var(--gutter-micro);
+}
+
+.project-actions a {
+  padding: auto;
+  color: var(--important);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s var(--easing);
+}
+
+.project-actions a:hover {
+  color: rgb(255, 131, 139); /* A color that matches part of the gradient */
+}
+
+.project-list {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  background: var(--bg-color-primary);
+  color: var(--important);
+  padding: var(--gutter-medium);
+  gap: var(--gutter-small);
+
 }

@@ -1,11 +1,13 @@
+// ###################################
+// Navigation Menu Toggle and Behavior
+// ###################################
+
 const nav = document.querySelector(".nav");
 const navMenu = document.querySelector(".nav-items");
 const btnToggleNav = document.querySelector(".menu-btn");
-const workEls = document.querySelectorAll(".work-box");
-const workImgs = document.querySelectorAll(".work-img");
 const mainEl = document.querySelector("main");
-const yearEl = document.querySelector(".footer-text span");
 
+// Toggle the visibility of the navigation menu
 const toggleNav = () => {
   nav.classList.toggle("hidden");
 
@@ -22,24 +24,32 @@ const toggleNav = () => {
   }
 };
 
+// Add event listeners for menu toggle
 btnToggleNav.addEventListener("click", toggleNav);
-
 navMenu.addEventListener("click", (e) => {
   if (e.target.localName === "a") {
     toggleNav();
   }
 });
 
+// Close the menu when pressing the 'Escape' key
 document.body.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !nav.classList.contains("hidden")) {
     toggleNav();
   }
 });
 
-// Animating work instances on scroll
+// ###################################
+// Animating Work Instances on Scroll
+// ###################################
 
+const workEls = document.querySelectorAll(".work-box");
+const workImgs = document.querySelectorAll(".work-img");
+
+// Add transform class for animation
 workImgs.forEach((workImg) => workImg.classList.add("transform"));
 
+// Intersection Observer to animate elements when they come into view
 let observer = new IntersectionObserver(
   (entries) => {
     const [entry] = entries;
@@ -58,11 +68,14 @@ workEls.forEach((workEl) => {
   observer.observe(workEl);
 });
 
-// Toggle theme and store user preferred theme for future
+// ###################################
+// Theme Toggle and User Preferences
+// ###################################
 
 const switchThemeEl = document.querySelector('input[type="checkbox"]');
 const storedTheme = localStorage.getItem("theme");
 
+// Set the theme based on the stored preference
 switchThemeEl.checked = storedTheme === "dark" || storedTheme === null;
 
 switchThemeEl.addEventListener("click", () => {
@@ -80,10 +93,13 @@ switchThemeEl.addEventListener("click", () => {
   }
 });
 
-// Trap the tab when menu is opened
+// ###################################
+// Trap Tab Key when Menu is Opened
+// ###################################
 
 const lastFocusedEl = document.querySelector('a[data-focused="last-focused"]');
 
+// Ensure focus stays within the menu when it's opened
 document.body.addEventListener("keydown", (e) => {
   if (e.key === "Tab" && document.activeElement === lastFocusedEl) {
     e.preventDefault();
@@ -91,12 +107,16 @@ document.body.addEventListener("keydown", (e) => {
   }
 });
 
-// Rotating logos animation
+// ###################################
+// Rotating Logos Animation
+// ###################################
 
 const logosWrappers = document.querySelectorAll(".logo-group");
 
+// Helper function to pause execution for a specified time
 const sleep = (number) => new Promise((res) => setTimeout(res, number));
 
+// Rotate logos at intervals
 logosWrappers.forEach(async (logoWrapper, i) => {
   const logos = Array.from(logoWrapper.children);
   await sleep(1400 * i);
@@ -111,10 +131,14 @@ logosWrappers.forEach(async (logoWrapper, i) => {
   }, 5600);
 });
 
+// Update the year in the footer
+const yearEl = document.querySelector(".footer-text span");
 yearEl.textContent = new Date().getFullYear();
 
+// ###################################
+// Matrix Effect Animation
+// ###################################
 
-// Matrix Effect
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 
@@ -127,42 +151,141 @@ let drops = Array(columns).fill(1);
 
 const nameText = "NANA AMOAKO";
 let isMorphing = false;
+let animationFrameId;
+const speedFactor = 0.55; // Value between 0 and 1; lower is slower
 
+// Draw the Matrix effect
 function drawMatrix() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.fillStyle = '#0F0';
-    ctx.font = `${fontSize}px monospace`;
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.fillStyle = '#0F0';
+  ctx.font = `${fontSize}px monospace`;
 
-    drops.forEach((y, i) => {
-        let text;
+  drops.forEach((y, i) => {
+      let text;
+      if (isMorphing) {
+          text = nameText[i % nameText.length];
+      } else {
+          text = String.fromCharCode(65 + Math.random() * 33);
+      }
 
-        if (isMorphing) {
-            text = nameText[i % nameText.length];
-        } else {
-            text = String.fromCharCode(65 + Math.random() * 33);
-        }
+      ctx.fillText(text, i * fontSize, y * fontSize);
 
-        ctx.fillText(text, i * fontSize, y * fontSize);
+      // Apply the speed factor to slow down the drops
+      if (Math.random() < speedFactor) {
+          drops[i]++;
+      }
 
-        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-    });
+      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+  });
+
+  animationFrameId = requestAnimationFrame(drawMatrix);
 }
 
 // Start the Matrix effect
-setInterval(drawMatrix, 50);
+animationFrameId = requestAnimationFrame(drawMatrix);
 
 // Trigger the morphing effect after 5 seconds
 setTimeout(() => {
     isMorphing = true;
 }, 5000);
 
-// Handle resizing
+// Debounce resizing to maintain the drops' state
+let resizeTimeout;
 window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = Array(columns).fill(1);
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        const oldColumns = columns;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+
+        // Preserve existing values when adjusting the drops array
+        if (columns > oldColumns) {
+            drops = [...drops, ...Array(columns - oldColumns).fill(1)];
+        } else {
+            drops = drops.slice(0, columns);
+        }
+    }, 100);
 });
+
+// Pause animation when window is not in focus (optimize performance)
+window.addEventListener('blur', () => {
+    cancelAnimationFrame(animationFrameId);
+});
+
+window.addEventListener('focus', () => {
+    animationFrameId = requestAnimationFrame(drawMatrix);
+});
+
+// ###################################
+// Fetch and Display Featured Repositories
+// ###################################
+
+
+const repoContainer = document.getElementById('repo-container');
+const featuredRepos = [
+  'DSA-File-Explorers', 'apms', 'kumi_fcln', 'Recifree',
+  'volume-gesture-control', 'Group35_CocoaPricePrediction',
+  'text-clock-by-nanaamoako', 'personal-pomodoro-timer'
+];
+
+// List of gradient images to use as backgrounds
+const gradientImages = [
+  'https://images.unsplash.com/photo-1614854262409-bc319cba5802?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1614850715973-58c3167b30a0?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1614850523527-08bd62441994?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1614851099507-f1a93001d984?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1614849286521-4c58b2f0ff15?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1579546929662-711aa81148cf?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+];
+
+async function fetchRepos() {
+  try {
+    const response = await fetch('/.netlify/functions/fetchRepos');
+    const repos = await response.json();
+    console.log(repos); // Inspect the list of fetched repositories
+
+    repos.forEach((repo, index) => {
+      if (featuredRepos.includes(repo.name)) {
+        const projectCard = document.createElement('div');
+        projectCard.classList.add('project-card');
+
+        projectCard.addEventListener('click', () => {
+          window.open(repo.html_url, '_blank');
+        });
+
+        // Get a gradient image from the list
+        const gradientImage = gradientImages[index % gradientImages.length];
+        const projectImage = document.createElement('div');
+        projectImage.classList.add('project-image');
+        projectImage.style.backgroundImage = `url('${gradientImage}')`;
+
+        const projectDetails = document.createElement('div');
+        projectDetails.classList.add('project-details');
+        projectDetails.innerHTML = `
+          <h3>${repo.name}</h3>
+          <p>${repo.description || 'No description provided'}</p>
+        `;
+
+        const projectActions = document.createElement('div');
+        projectActions.classList.add('project-actions');
+        projectActions.innerHTML = `
+          <a href="${repo.html_url}" target="_blank">View on GitHub</a>
+        `;
+
+        projectCard.appendChild(projectImage);
+        projectCard.appendChild(projectDetails);
+        projectCard.appendChild(projectActions);
+        repoContainer.appendChild(projectCard);
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching repositories:', error);
+  }
+}
+
+fetchRepos();
