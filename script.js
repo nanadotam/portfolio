@@ -229,7 +229,7 @@ window.addEventListener('focus', () => {
 const repoContainer = document.getElementById('repo-container');
 const featuredRepos = [
   'DSA-File-Explorers', 'apms', 'kumi_fcln', 'Recifree',
-  'volume-gesture-control', 'Group35_CocoaPricePrediction',
+  'volume-gesture-control', 'Cocoa-Price-Prediction',
   'text-clock-by-nanaamoako', 'personal-pomodoro-timer'
 ];
 
