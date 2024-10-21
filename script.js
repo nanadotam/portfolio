@@ -301,6 +301,10 @@ async function fetchRepos() {
         if (logoImage) {
           logoImage.src = logoSrc;
         }
+        
+        // Force cache reload
+        logoImage.src = `${logoSrc}?v=${new Date().getTime()}`;
+
 
         // Create the details section with the logo before the repository name
         const projectDetails = document.createElement('div');
