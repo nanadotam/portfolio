@@ -1452,13 +1452,13 @@ input:checked {
 /* ----- Responsive Adjustments -----*/
 
 /* Adjust the project card width for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 48rem) { /* 768px converted to rem */
   .project-card {
-    max-width: 300px; /* Reduce the card width for tablets */
+    max-width: 13.125rem; /* 210px converted to rem */
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) { /* 480px converted to rem */
   .project-card {
     max-width: 100%; /* Make the card full-width on mobile */
   }
