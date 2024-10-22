@@ -1424,6 +1424,7 @@ input:checked {
   width: 100%;
   max-width: 400px;
   border-radius: var(--radius);
+  border-radius: 60px;
   border: .2rem solid var(--border-dark);
   overflow: hidden;
   transition: transform 0.6s var(--easing), box-shadow 0.6s var(--easing);
@@ -1528,5 +1529,93 @@ input:checked {
 @media (max-width: 30rem) { /* 480px converted to rem */
   .project-card {
     max-width: 80%; /* Make the card full-width on mobile */
+  }
+}
+
+
+/* --------------------------------- */
+/* ----- About Section -----*/
+/* --------------------------------- */
+
+.about-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter-large);
+  margin-block: var(--gutter-huge);
+}
+
+.profile-card,
+.stat-card {
+  flex: 0 0 400px; /* Fixed width, no shrink */
+  display: flex;
+  flex-direction: column;
+  max-width: 400px; /* Ensures the card doesn't expand */
+  width: 100%;
+  overflow: hidden;
+  /* border-radius: var(--radius); */
+  border-radius: 24px;
+  border: 0.2rem solid var(--border-dark);
+  background: var(--bg-color-secondary);
+  color: var(--important);
+  box-shadow: var(--shadow);
+  transition: transform 0.6s var(--easing), box-shadow 0.6s var(--easing);
+  cursor: pointer;
+  text-align: center; /* Center the text within the card */
+}
+
+.profile-card:hover,
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1.0rem 2.5rem rgba(0, 0, 0, 0.4);
+}
+
+.profile-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-dark);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.social-links a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--gutter-nano);
+  margin: var(--gutter-nano);
+  color: var(--important);
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: var(--gutter-nano);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: rgb(255, 131, 139); /* Matches the gradient color for consistency */
+}
+
+.stat-card h3 {
+  font-size: var(--h3);
+  color: var(--important);
+  margin: var(--gutter-nano) 0;
+}
+
+.stat-card p {
+  font-size: var(--text-medium);
+  color: var(--sub);
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card,
+  .stat-card {
+    max-width: 100%; /* Make the card full-width on mobile */
+  }
+
+  .profile-image {
+    height: 200px; /* Adjust image height on smaller screens */
   }
 }
