@@ -232,9 +232,12 @@ h3,
 }
 
 .h2 {
-  font-size: var(--h2);
   text-align: center;
+  font-size: var(--h2);
+  color: var(--important);
+  margin-bottom: var(--gutter-medium);
 }
+
 
 .h3 {
   font-size: var(--h3);
@@ -519,6 +522,8 @@ main {
               0 0 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px); /* Frosted glass effect */
 }
+
+/* Change text color to white when in light mode and scrolled */
 
 
 /* Adjust the shadow for mobile view */
@@ -1137,6 +1142,13 @@ body.dark .work-links img {
   padding: var(--gutter-large) var(--gutter-small);
 }
 
+.contact-textbox {
+  text-align: center; /* Center align the text */
+  padding: var(--gutter-large) var(--gutter-small);
+  border-bottom: 1px solid var(--border); /* Adds a bottom border for separation */
+}
+
+
 .hire-alert {
   display: inline-flex;
   align-items: center;
@@ -1244,6 +1256,32 @@ body.light .signatures {
 .contact-form button[type="submit"] {
   border: none;
 }
+
+
+.logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  gap: var(--gutter-medium);
+  padding: var(--gutter-medium);
+}
+
+.logo-box img {
+  height: 30rem; 
+  width: 30rem; 
+  object-fit: contain;
+}
+
+
+.contact-logo {
+  display: block;
+  max-width: 100%;
+  max-height: 8rem; /* Adjust the size using rem */
+  object-fit: contain;
+  transition: opacity 0.3s ease; /* Smooth transition for theme changes */
+}
+
 
 /* --------------------------------- */
 /* ----- Footer -----*/
@@ -1399,6 +1437,7 @@ input:checked {
   background: var(--bg-color-secondary);
   color: var(--important);
   box-shadow: var(--shadow);
+  position: relative;
 }
 
 .project-card:hover {
@@ -1479,7 +1518,7 @@ input:checked {
   scroll-behavior: smooth;
   background: var(--bg-color-primary);
   color: var(--important);
-  padding: var(--gutter-medium);
+  padding: var(--gutter-medium) var(--gutter-medium) var(--gutter-x-large) var(--gutter-medium);
   gap: var(--gutter-small);
   
 }
@@ -1542,7 +1581,16 @@ input:checked {
   display: block;
 }
 
+.social-links {
+  display: flex;
+  justify-content: center; /* Center the links horizontally */
+  align-items: center;
+  gap: var(--gutter-micro); /* Add space between the links */
+  margin-top: var(--gutter-small); /* Space between text and social links */
+}
+
 .social-links a {
+  display: inline-block;
   margin: 0 10px;
   color: #76c893;
   text-decoration: none;
@@ -1552,6 +1600,7 @@ input:checked {
 .social-links a:hover {
   color: #b4e391;
 }
+
 
 .stats-grid {
   display: grid;

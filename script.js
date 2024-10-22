@@ -248,10 +248,49 @@ window.addEventListener('focus', () => {
 
 
 const repoContainer = document.getElementById('repo-container');
+
+// Array of featured projects
 const featuredRepos = [
-  'DSA-File-Explorers', 'apms', 'kumi_fcln', 'Recifree',
-  'volume-gesture-control', 'Cocoa-Price-Prediction',
-  'text-clock-by-nanaamoako', 'personal-pomodoro-timer'
+  {
+    name: 'DSA File Explorers: Virtual File Management',
+    description: 'A file management system with CLI and GUI built using Java.',
+    url: 'https://github.com/nanadotam/DSA-File-Explorers'
+  },
+  {
+    name: 'Ashesi Parking Management System',
+    description: 'Advanced property management system for real estate.',
+    url: 'https://github.com/nanadotam/apms'
+  },
+  {
+    name: 'Kumi: Making Learning Fun',
+    description: 'An educational platform for collaborative learning.',
+    url: 'https://github.com/nanadotam/kumi_fcln'
+  },
+  {
+    name: 'Recifree: Free Recipes',
+    description: 'A recipe sharing platform with admin dashboard features.',
+    url: 'https://github.com/nanadotam/Recifree'
+  },
+  {
+    name: 'Volume Gesture Control App',
+    description: 'Control volume with hand gestures using computer vision.',
+    url: 'https://github.com/nanadotam/volume-gesture-control'
+  },
+  {
+    name: 'Cocoa Price Prediction App',
+    description: 'Machine learning model to predict cocoa market prices.',
+    url: 'https://github.com/nanadotam/Cocoa-Price-Prediction'
+  },
+  {
+    name: 'text clock by nanaamoako',
+    description: 'A creative text-based clock implemented with JavaScript.',
+    url: 'https://github.com/nanadotam/text-clock-by-nanaamoako'
+  },
+  {
+    name: 'Personal Pomodoro Timer',
+    description: 'A custom Pomodoro timer for productivity enthusiasts.',
+    url: 'https://github.com/nanadotam/personal-pomodoro-timer'
+  }
 ];
 
 // List of gradient images to use as backgrounds
@@ -266,69 +305,42 @@ const gradientImages = [
   'https://images.unsplash.com/photo-1579546929662-711aa81148cf?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 ];
 
-async function fetchRepos() {
-  try {
-    const response = await fetch('/.netlify/functions/fetchRepos');
-    const repos = await response.json();
+// Dynamically create project cards
+featuredRepos.forEach((repo, index) => {
+  const projectCard = document.createElement('div');
+  projectCard.classList.add('project-card');
 
-    repos.forEach((repo, index) => {
-      if (featuredRepos.includes(repo.name)) {
-        const projectCard = document.createElement('div');
-        projectCard.classList.add('project-card');
+  // Add click event to open the GitHub repository
+  projectCard.addEventListener('click', () => {
+    window.open(repo.url, '_blank');
+  });
 
-        projectCard.addEventListener('click', () => {
-          window.open(repo.html_url, '_blank');
-        });
+  // Get a gradient image from the list
+  const gradientImage = gradientImages[index % gradientImages.length];
+  const projectImage = document.createElement('div');
+  projectImage.classList.add('project-image');
+  projectImage.style.backgroundImage = `url('${gradientImage}')`;
 
-        // Get a gradient image from the list
-        const gradientImage = gradientImages[index % gradientImages.length];
-        const projectImage = document.createElement('div');
-        projectImage.classList.add('project-image');
-        projectImage.style.backgroundImage = `url('${gradientImage}')`;
+  // Create the details section with the logo before the repository name
+  const projectDetails = document.createElement('div');
+  projectDetails.classList.add('project-details');
+  projectDetails.innerHTML = `
+    <h3>
+      ${repo.name}
+    </h3>
+    <p>${repo.description}</p>
+  `;
 
-        // Choose the logo based on the theme
-        const isDarkTheme = document.body.classList.contains('dark');
-        let logoSrc;
+  // Append sections to the card
+  projectCard.appendChild(projectImage);
+  projectCard.appendChild(projectDetails);
+  repoContainer.appendChild(projectCard);
+});
 
-        if (isDarkTheme) {
-          logoSrc = 'assets/images/github-logo/GitHub_Invertocat_Light.svg';
-        } else {
-          logoSrc = 'assets/images/github-logo/GitHub_Invertocat_Dark.svg';
-        }
-
-        // Update the logo image source
-        const logoImage = document.querySelector('#logo-image');
-        if (logoImage) {
-          logoImage.src = logoSrc;
-        }
-        
-        // Force cache reload
-        logoImage.src = `${logoSrc}?v=${new Date().getTime()}`;
-
-
-        // Create the details section with the logo before the repository name
-        const projectDetails = document.createElement('div');
-        projectDetails.classList.add('project-details');
-        projectDetails.innerHTML = `
-          <h3>
-            <img src="${logoSrc}" alt="GitHub Logo" class="github-logo">
-            ${repo.name}
-          </h3>
-          <p>${repo.description || 'No description provided'}</p>
-        `;
-
-        // Append sections to the card
-        projectCard.appendChild(projectImage);
-        projectCard.appendChild(projectDetails);
-        repoContainer.appendChild(projectCard);
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching repositories:', error);
-  }
-}
 
 fetchRepos();
+
+
 
 
 document.querySelectorAll('.menu-btn').forEach(button => {
@@ -355,4 +367,41 @@ window.addEventListener('scroll', () => {
       button.classList.remove('scrolled');
     }
   });
+});
+
+
+
+document.getElementById('contact-form').addEventListener('submit', function (event) {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const subject = document.getElementById('subject').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !email || !subject || !message) {
+    event.preventDefault();
+    alert('Please fill in all fields before submitting the form.');
+  }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logo = document.getElementById('logo');
+
+  function updateLogo() {
+    const isDarkTheme = document.body.classList.contains('dark');
+    logo.src = isDarkTheme
+      ? 'assets/images/nana-amoako-logo-white.png'
+      : 'assets/images/nana-amoako-logo-black.png';
+    logo.style.height = '8rem';
+    logo.style.width = '8rem';
+    logo.style.display = 'block'; // Ensure the logo is visible
+    logo.style.margin = '0 auto'; // Center the logo
+  }
+
+  // Initial logo setting
+  updateLogo();
+
+  // Update logo when the theme changes
+  document.getElementById('theme-switch').addEventListener('change', updateLogo);
 });

@@ -80,7 +80,6 @@
       <canvas id="matrix"></canvas>
       <!-- Matrix effect canvas -->
 
-
       <!-- MEU & NAVBAT -->
       <div class="menu-btn-container">
         <div class="nav-buttons">
@@ -88,10 +87,18 @@
             menu
           </button>
           <!-- <button type="button" class="menu-btn">menu</button> -->
-          <button type="button" class="menu-btn" data-target="#home">home</button>
-          <button type="button" class="menu-btn" data-target="#projects">projects</button>
-          <button type="button" class="menu-btn" data-target="#about">about</button>
-          <button type="button" class="menu-btn" data-target="#contact">contact</button>
+          <button type="button" class="menu-btn" data-target="#home">
+            home
+          </button>
+          <button type="button" class="menu-btn" data-target="#projects">
+            projects
+          </button>
+          <button type="button" class="menu-btn" data-target="#about">
+            about
+          </button>
+          <button type="button" class="menu-btn" data-target="#contact">
+            contact
+          </button>
         </div>
       </div>
 
@@ -124,65 +131,150 @@
     </header>
 
     <!-- Projects section -->
-<section id="projects" class="project-list">
-  <!-- Projects section -->
-  <div id="repo-container" class="project-list"></div>
-</section>
-
-
+    <section id="projects" class="project-list">
+      <h2 class="h2">Projects</h2>
+      <!-- Projects section -->
+      <div id="repo-container" class="project-list"></div>
+    </section>
 
     <!-- About Cards -->
     <section id="about" class="about-container">
+      <h2 class="h2">About Me</h2>
       <div class="profile-card">
-          <img src="assets/images/profile.jpeg" alt="Nana Amoako" class="profile-image" />
-          <h3>Nana Amoako</h3>
-          <p>CS Major @ Ashesi University</p>
-          <div class="social-links">
-              <a href="https://github.com/nanadotam" target="_blank" rel="noopener">GitHub</a>
-              <a href="https://www.linkedin.com/in/nanaamoako/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
+        <img
+          src="assets/images/profile.jpeg"
+          alt="Nana Amoako"
+          class="profile-image"
+        />
+        <h3>Nana Amoako</h3>
+        <p>CS Major @ Ashesi University</p>
+        <div class="social-links">
+          <a href="https://github.com/nanadotam" target="_blank" rel="noopener"
+            >GitHub</a
+          >
+          <a
+            href="https://www.linkedin.com/in/nanaamoako/"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+        </div>
       </div>
-      
+
       <div class="stats-grid">
-          <div class="stat-card">
-              <h3>LeetCode</h3>
-              <p>250 Problems Solved</p>
-          </div>
-          <div class="stat-card">
-              <h3>Projects</h3>
-              <p>15 Completed</p>
-          </div>
-          <div class="stat-card">
-              <h3>GitHub Repos</h3>
-              <p>30+ Public Repos</p>
-          </div>
-          <div class="stat-card">
-              <h3>Years of Experience</h3>
-              <p>3+ Years</p>
-          </div>
-          <div class="stat-card">
-              <h3>Tech Stack</h3>
-              <p>JavaScript, Python, Java, C++</p>
-          </div>
-          <div class="stat-card">
-              <h3>Certifications</h3>
-              <p>Google IT Support, AWS Cloud Practitioner</p>
-          </div>
+        <div class="stat-card">
+          <h3>LeetCode</h3>
+          <p>100 Problems Solved</p>
+        </div>
+        <div class="stat-card">
+          <h3>Projects</h3>
+          <p>15 Completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>GitHub Repos</h3>
+          <p>30+ Public Repos</p>
+        </div>
+        <div class="stat-card">
+          <h3>Years of Experience</h3>
+          <p>3+ Years</p>
+        </div>
+        <div class="stat-card">
+          <h3>Tech Stack</h3>
+          <p>JavaScript, Python, Java, C++</p>
+        </div>
+        <div class="stat-card">
+          <h3>Certifications</h3>
+          <p>Google IT Support, AWS Cloud Practitioner</p>
+        </div>
       </div>
-  </section>
-  
-    
-    
-  <!-- Contact Section (Example) -->
-<section id="contact">
-  <div class="container">
-    <h2>Contact Me</h2>
-    <p>Feel free to reach out for collaborations or just a friendly chat.</p>
-    <!-- Add your contact form or details here -->
-  </div>
-</section>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="h2">Contact Me</h2>
+        <p class="contact-text">
+          Feel free to reach out for collaborations, opportunities, or just a
+          friendly chat.
+        </p>
 
+        <div class="contact-content">
+          <!-- Contact Form -->
+          <form
+            id="contact-form"
+            class="contact-form"
+            action="https://formspree.io/f/meoqoznr"
+            method="POST"
+          >
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Your Name"
+              />
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="_replyto"
+                required
+                placeholder="Your Email"
+              />
+            </div>
+            <div class="form-field">
+              <label for="subject">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                required
+                placeholder="Subject"
+              />
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Your Message"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-cta">Send Message</button>
+          </form>
+
+          <!-- Contact Logo Box -->
+          <div class="contact-textbox">
+            <div class="logo-box">
+              <img id="logo" alt="Nana Amoako's Logo" class="contact-logo" src="assets/images/nana-amoako-logo-black.png" />
+            </div>
+            <p class="contact-text">
+              You can also reach out through my social media platforms:
+            </p>
+            <div class="social-links">
+              <a
+                href="https://github.com/nanadotam"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+              <a
+                href="https://www.linkedin.com/in/nanaamoako/"
+                target="_blank"
+                rel="noopener"
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer class="footer">
       <div class="container">
@@ -217,7 +309,7 @@
             </ol>
           </nav>
           <p class="footer-text">
-            &copy; <span>2024</span> - Website still under construction.
+            &copy; <span>2024</span> - Portfolio still under construction.
             Developed by
             <a
               target="_blank"
