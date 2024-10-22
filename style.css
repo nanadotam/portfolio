@@ -467,9 +467,6 @@ main {
   }
 }
 
-/* --------------------------------- */
-/* ----- Menu Button -----*/
-/* --------------------------------- */
 
 /* --------------------------------- */
 /* ----- Menu Button -----*/
@@ -490,12 +487,15 @@ main {
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
+
+
 .nav-buttons {
   display: flex;
   gap: var(--gutter-large); /* Consistent spacing between buttons */
 }
 
 /* Style for individual buttons */
+
 .menu-btn {
   display: block;
   border: 1px solid var(--border-dark);
@@ -506,10 +506,28 @@ main {
   color: var(--important);
   cursor: pointer;
   text-align: center; /* Center text inside the button */
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
   font-weight: 900;
   font-stretch: 125%;
 }
+
+/* Apply shadow when scrolled */
+.menu-btn.scrolled {
+  background: rgba(0, 0, 0, 0.4); /* Darkens the button */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2),
+              0 0 20px rgba(0, 0, 0, 0.15),
+              0 0 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+}
+
+
+/* Adjust the shadow for mobile view */
+@media (max-width: 768px) {
+  .menu-btn.scrolled {
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.5); /* Vertical shadow for mobile */
+  }
+}
+
 
 .menu-btn:hover {
   transform: translateY(-2px);
@@ -563,57 +581,6 @@ main {
   .menu-btn-container.active .menu-btn {
     display: block; /* Show all buttons when active */
   }
-}
-
-
-
-/* --------------------------------- */
-/* ----- Navigation -----*/
-/* --------------------------------- */
-
-.nav {
-  min-block-size: 100vh;
-  position: fixed;
-  width: 100%;
-  background-color: #ff5e99;
-  background-image: var(--gradient-brand);
-  transition: 450ms var(--easing);
-  z-index: 3;
-}
-
-.nav-items {
-  position: absolute;
-  top: 50%;
-  left: 15%;
-  transform: translateY(-50%) translateX(-15%);
-  list-style-type: none;
-}
-
-.nav-item:not(:last-child) {
-  margin-block-end: var(--gutter-x-small);
-}
-
-.nav-item a {
-  display: inline-block;
-  font-size: var(--h2);
-  text-decoration: none;
-  color: #fff;
-}
-
-.nav-item a::after {
-  content: "";
-  display: block;
-  block-size: var(--gutter-nano);
-  width: 100%;
-  transform: scale(0);
-  transform-origin: left;
-  background-color: white;
-  transition: transform 250ms var(--easing);
-}
-
-.nav-item a:hover::after,
-.nav-item a:focus::after {
-  transform: scale(1);
 }
 
 
@@ -1548,7 +1515,8 @@ input:checked {
 
 
 .profile-card {
-  background: #1c1c1c;
+  background: var(--bg-color-secondary);
+  border: 0.2rem solid var(--border-dark);
   border-radius: 20px;
   text-align: center;
   padding: 2rem;
@@ -1592,7 +1560,8 @@ input:checked {
 }
 
 .stat-card {
-  background: #1c1c1c;
+  background: var(--bg-color-secondary);
+  border: 0.2rem solid var(--border-dark);
   padding: 2rem;
   border-radius: 20px;
   text-align: center;

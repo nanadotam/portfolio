@@ -341,3 +341,18 @@ document.querySelectorAll('.menu-btn').forEach(button => {
     }
   });
 });
+
+
+
+
+// Add shadow on scroll
+window.addEventListener('scroll', () => {
+  const menuButtons = document.querySelectorAll('.menu-btn');
+  menuButtons.forEach(button => {
+    if (window.scrollY > 0) {
+      button.classList.add('scrolled');
+    } else {
+      button.classList.remove('scrolled');
+    }
+  });
+});
