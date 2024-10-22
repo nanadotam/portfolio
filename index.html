@@ -76,19 +76,22 @@
       document.body.classList.add(theme);
     </script>
 
-    <header class="header">
+    <header id="home" class="header">
       <canvas id="matrix"></canvas>
       <!-- Matrix effect canvas -->
+
+
+      <!-- MEU & NAVBAT -->
       <div class="menu-btn-container">
         <div class="nav-buttons">
           <button type="button" class="menu-btn" data-menu="toggle">
-            Menu
+            menu
           </button>
           <!-- <button type="button" class="menu-btn">menu</button> -->
-          <button type="button" class="menu-btn">home</button>
-          <button type="button" class="menu-btn">projects</button>
-          <button type="button" class="menu-btn">about</button>
-          <button type="button" class="menu-btn">contact</button>
+          <button type="button" class="menu-btn" data-target="#home">home</button>
+          <button type="button" class="menu-btn" data-target="#projects">projects</button>
+          <button type="button" class="menu-btn" data-target="#about">about</button>
+          <button type="button" class="menu-btn" data-target="#contact">contact</button>
         </div>
       </div>
 
@@ -121,7 +124,10 @@
     </header>
 
     <!-- Projects section -->
-    <div id="repo-container" class="project-list"></div>
+<section id="projects" class="project-list">
+  <!-- Projects section -->
+  <div id="repo-container" class="project-list"></div>
+</section>
 
 
 
@@ -166,7 +172,18 @@
   </section>
   
     
-        
+    
+  <!-- Contact Section (Example) -->
+<section id="contact">
+  <div class="container">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out for collaborations or just a friendly chat.</p>
+    <!-- Add your contact form or details here -->
+  </div>
+</section>
+
+
+
     <footer class="footer">
       <div class="container">
         <div class="footer-content">

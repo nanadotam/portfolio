@@ -329,3 +329,15 @@ async function fetchRepos() {
 }
 
 fetchRepos();
+
+
+document.querySelectorAll('.menu-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const targetSection = document.querySelector(this.getAttribute('data-target'));
+    if (targetSection) {
+      targetSection.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+});
