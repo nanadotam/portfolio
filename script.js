@@ -4,13 +4,11 @@
 
 const nav = document.querySelector(".nav");
 const navMenu = document.querySelector(".nav-items");
-// const btnToggleNav = document.querySelector(".menu-btn");
 const mainEl = document.querySelector("main");
 
 document.querySelector('.menu-btn').addEventListener('click', function () {
   document.querySelector('.menu-btn-container').classList.toggle('active');
 });
-
 
 // JavaScript to toggle the visibility of menu items
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,11 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
     navButtons.classList.toggle('active');
     menuButton.textContent = navButtons.classList.contains('active') ? 'close' : 'menu';
   });
+
+  // Add shadow and blur effect on scroll for menu buttons
+  window.addEventListener('scroll', () => {
+    const menuButtons = document.querySelectorAll('.menu-btn');
+    menuButtons.forEach(button => {
+      if (window.scrollY > 0) {
+        button.classList.add('scrolled');
+      } else {
+        button.classList.remove('scrolled');
+      }
+    });
+  });
 });
-
-
-
-// $$$$$$$$$$$$$$$
 
 // Toggle the visibility of the navigation menu
 const toggleNav = () => {
@@ -34,92 +40,17 @@ const toggleNav = () => {
 
   // Prevent screen from scrolling when menu is opened
   document.body.classList.toggle("lock-screen");
-
-  // if (nav.classList.contains("hidden")) {
-  //   btnToggleNav.textContent = "menu";
-  // } else {
-  //   // When menu is opened after transition change text respectively
-  //   setTimeout(() => {
-  //     btnToggleNav.textContent = "close";
-  //   }, 475);
-  // }
 };
 
-// Add event listeners for menu toggle
-// btnToggleNav.addEventListener("click", toggleNav);
-// navMenu.addEventListener("click", (e) => {
-//   if (e.target.localName === "a") {
-//     toggleNav();
-//   }
-// });
 
-// // Close the menu when pressing the 'Escape' key
-// document.body.addEventListener("keydown", (e) => {
-//   if (e.key === "Escape" && !nav.classList.contains("hidden")) {
-//     toggleNav();
-//   }
-// });
 
-// ###################################
-// Animating Work Instances on Scroll
-// ###################################
 
-const workEls = document.querySelectorAll(".work-box");
-const workImgs = document.querySelectorAll(".work-img");
-
-// Add transform class for animation
-workImgs.forEach((workImg) => workImg.classList.add("transform"));
-
-// Intersection Observer to animate elements when they come into view
-let observer = new IntersectionObserver(
-  (entries) => {
-    const [entry] = entries;
-    const [textbox, picture] = Array.from(entry.target.children);
-    if (entry.isIntersecting) {
-      picture.classList.remove("transform");
-      Array.from(textbox.children).forEach(
-        (el) => (el.style.animationPlayState = "running")
-      );
-    }
-  },
-  { threshold: 0.3 }
-);
-
-workEls.forEach((workEl) => {
-  observer.observe(workEl);
-});
-
-// ###################################
-// Theme Toggle and User Preferences
-// ###################################
-
-const switchThemeEl = document.querySelector('input[type="checkbox"]');
-const storedTheme = localStorage.getItem("theme");
-
-// Set the theme based on the stored preference
-switchThemeEl.checked = storedTheme === "dark" || storedTheme === null;
-
-switchThemeEl.addEventListener("click", () => {
-  const isChecked = switchThemeEl.checked;
-
-  if (!isChecked) {
-    document.body.classList.remove("dark");
-    document.body.classList.add("light");
-    localStorage.setItem("theme", "light");
-    switchThemeEl.checked = false;
-  } else {
-    document.body.classList.add("dark");
-    document.body.classList.remove("light");
-    localStorage.setItem("theme", "dark");
-  }
-});
 
 // ###################################
 // Trap Tab Key when Menu is Opened
 // ###################################
 
 const lastFocusedEl = document.querySelector('a[data-focused="last-focused"]');
-
 // Ensure focus stays within the menu when it's opened
 // document.body.addEventListener("keydown", (e) => {
 //   if (e.key === "Tab" && document.activeElement === lastFocusedEl) {
@@ -129,36 +60,76 @@ const lastFocusedEl = document.querySelector('a[data-focused="last-focused"]');
 // });
 
 // ###################################
-// Rotating Logos Animation
+// Theme Toggle and User Preferences
 // ###################################
 
-const logosWrappers = document.querySelectorAll(".logo-group");
+document.addEventListener('DOMContentLoaded', () => {
+  const switchThemeEl = document.querySelector('input[type="checkbox"]');
+  const storedTheme = localStorage.getItem('theme');
+  const logo = document.getElementById('logo');
 
-// Helper function to pause execution for a specified time
-const sleep = (number) => new Promise((res) => setTimeout(res, number));
+  // Set the theme based on the stored preference
+  switchThemeEl.checked = storedTheme === 'dark' || storedTheme === null;
+  updateTheme();
 
-// Rotate logos at intervals
-logosWrappers.forEach(async (logoWrapper, i) => {
-  const logos = Array.from(logoWrapper.children);
-  await sleep(1400 * i);
-  setInterval(() => {
-    let temp = logos[0];
-    logos[0] = logos[1];
-    logos[1] = logos[2];
-    logos[2] = temp;
-    logos[0].classList.add("hide", "to-top");
-    logos[1].classList.remove("hide", "to-top", "to-bottom");
-    logos[2].classList.add("hide", "to-bottom");
-  }, 5600);
+  switchThemeEl.addEventListener('click', updateTheme);
+
+  function updateTheme() {
+    const isChecked = switchThemeEl.checked;
+    if (isChecked) {
+      document.body.classList.add('dark');
+      document.body.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
+      logo.src = 'assets/images/nana-amoako-logo-white.png';
+    } else {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+      localStorage.setItem('theme', 'light');
+      logo.src = 'assets/images/nana-amoako-logo-black.png';
+    }
+
+    logo.style.height = '8rem';
+    logo.style.width = '8rem';
+    logo.style.display = 'block';
+    logo.style.margin = '0 auto';
+  }
 });
 
-// Update the year in the footer
-const yearEl = document.querySelector(".footer-text span");
-yearEl.textContent = new Date().getFullYear();
+// ###################################
+// Animating Work Instances on Scroll
+// ###################################
+
+const workEls = document.querySelectorAll('.work-box');
+const workImgs = document.querySelectorAll('.work-img');
+
+// Add transform class for animation
+workImgs.forEach((workImg) => workImg.classList.add('transform'));
+
+// Intersection Observer to animate elements when they come into view
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const [textbox, picture] = Array.from(entry.target.children);
+        picture.classList.remove('transform');
+        Array.from(textbox.children).forEach(
+          (el) => (el.style.animationPlayState = 'running')
+        );
+      }
+    });
+  },
+  { threshold: 0.3 }
+);
+
+workEls.forEach((workEl) => {
+  observer.observe(workEl);
+});
 
 // ###################################
 // Matrix Effect Animation
 // ###################################
+
+
 
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
@@ -242,10 +213,11 @@ window.addEventListener('focus', () => {
 
 
 
+
+
 // ###################################
 // Fetch and Display Featured Repositories
 // ###################################
-
 
 const repoContainer = document.getElementById('repo-container');
 
@@ -325,9 +297,7 @@ featuredRepos.forEach((repo, index) => {
   const projectDetails = document.createElement('div');
   projectDetails.classList.add('project-details');
   projectDetails.innerHTML = `
-    <h3>
-      ${repo.name}
-    </h3>
+    <h3>${repo.name}</h3>
     <p>${repo.description}</p>
   `;
 
@@ -337,41 +307,11 @@ featuredRepos.forEach((repo, index) => {
   repoContainer.appendChild(projectCard);
 });
 
+// ###################################
+// Contact Form Validation
+// ###################################
 
-fetchRepos();
-
-
-
-
-document.querySelectorAll('.menu-btn').forEach(button => {
-  button.addEventListener('click', function () {
-    const targetSection = document.querySelector(this.getAttribute('data-target'));
-    if (targetSection) {
-      targetSection.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  });
-});
-
-
-
-
-// Add shadow on scroll
-window.addEventListener('scroll', () => {
-  const menuButtons = document.querySelectorAll('.menu-btn');
-  menuButtons.forEach(button => {
-    if (window.scrollY > 0) {
-      button.classList.add('scrolled');
-    } else {
-      button.classList.remove('scrolled');
-    }
-  });
-});
-
-
-
-document.getElementById('contact-form').addEventListener('submit', function (event) {
+document.getElementById('contact-form').addEventListener('submit', (event) => {
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
   const subject = document.getElementById('subject').value.trim();
@@ -383,25 +323,8 @@ document.getElementById('contact-form').addEventListener('submit', function (eve
   }
 });
 
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const logo = document.getElementById('logo');
-
-  function updateLogo() {
-    const isDarkTheme = document.body.classList.contains('dark');
-    logo.src = isDarkTheme
-      ? 'assets/images/nana-amoako-logo-white.png'
-      : 'assets/images/nana-amoako-logo-black.png';
-    logo.style.height = '8rem';
-    logo.style.width = '8rem';
-    logo.style.display = 'block'; // Ensure the logo is visible
-    logo.style.margin = '0 auto'; // Center the logo
-  }
-
-  // Initial logo setting
-  updateLogo();
-
-  // Update logo when the theme changes
-  document.getElementById('theme-switch').addEventListener('change', updateLogo);
+// Update the year in the footer
+document.addEventListener('DOMContentLoaded', () => {
+  const yearEl = document.querySelector('.footer-text span');
+  yearEl.textContent = new Date().getFullYear();
 });

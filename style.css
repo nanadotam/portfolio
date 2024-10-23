@@ -235,7 +235,7 @@ h3,
   text-align: center;
   font-size: var(--h2);
   color: var(--important);
-  margin-bottom: var(--gutter-medium);
+  padding-top: var(--gutter-small);
 }
 
 
@@ -442,7 +442,7 @@ body.light .link::after {
 /* --------------------------------- */
 
 section:not(:first-child) {
-  padding-block-start: var(--gutter-huge);
+  padding-block-start: var(--gutter-x-large);
 }
 
 section:first-child {
@@ -516,6 +516,7 @@ main {
 
 /* Apply shadow when scrolled */
 .menu-btn.scrolled {
+  position: relative;
   background: rgba(0, 0, 0, 0.4); /* Darkens the button */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2),
               0 0 20px rgba(0, 0, 0, 0.15),
@@ -1125,7 +1126,7 @@ body.dark .work-links img {
   grid-template-columns: minmax(245px, 35%) 1fr;
   margin-block: var(--gutter-x-large);
   border: 1px solid var(--border);
-  border-radius: var(--gutter-nano);
+  border-radius: var(--gutter-small);
 }
 
 @media (max-width: 1032px) {
@@ -1137,8 +1138,9 @@ body.dark .work-links img {
   }
 }
 
-.contact-textbox,
+
 .contact-form {
+  /* border-radius: var(--gutter-small); */
   padding: var(--gutter-large) var(--gutter-small);
 }
 
@@ -1198,6 +1200,7 @@ body.dark .work-links img {
 
 .contact-text {
   margin-block-end: var(--gutter-small);
+  text-align: center;
 }
 
 .signatures {
@@ -1210,8 +1213,19 @@ body.light .signatures {
 
 .contact-form {
   background-color: var(--bg-color-secondary);
-  border-top-right-radius: var(--gutter-nano);
-  border-bottom-right-radius: var(--gutter-nano);
+  /* border-top-right-radius: var(--gutter-nano); */
+  /* border-bottom-right-radius: var(--gutter-nano); */
+  border-bottom-left-radius: var(--gutter-small);
+  border-top-left-radius: var(--gutter-small);
+}
+
+/* Apply only for devices with a max-width of 768px */
+@media (max-width: 768px) {
+  .contact-form {
+    border-bottom-left-radius: var(--gutter-small);
+    border-bottom-right-radius: var(--gutter-small);
+    border-top-left-radius: 0; /* Remove top-left radius for mobile */
+  }
 }
 
 .form-field label,
@@ -1429,7 +1443,7 @@ input:checked {
   width: 100%;
   max-width: 400px;
   border-radius: var(--radius);
-  border-radius: 60px;
+  border-radius: 45px;
   border: .2rem solid var(--border-dark);
   overflow: hidden;
   transition: transform 0.6s var(--easing), box-shadow 0.6s var(--easing);
@@ -1515,6 +1529,7 @@ input:checked {
 .project-list {
   display: flex;
   overflow-x: auto;
+  align-items: center;
   scroll-behavior: smooth;
   background: var(--bg-color-primary);
   color: var(--important);
@@ -1522,6 +1537,7 @@ input:checked {
   gap: var(--gutter-small);
   
 }
+
 
 /* ----- Responsive Adjustments -----*/
 
