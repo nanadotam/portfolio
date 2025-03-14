@@ -225,7 +225,7 @@ const repoContainer = document.getElementById('repo-container');
 const featuredRepos = [
   {
     name: 'NanoClip',
-    description: 'A file transfer and univeersal clipboard sharing platform that allows you to send files from device to device similar to AirDrop. ',
+    description: 'A file transfer and universal clipboard sharing platform that allows you to send files from device to device similar to AirDrop. ',
     url: 'https://nanoclip.vercel.app'
   },
   {
