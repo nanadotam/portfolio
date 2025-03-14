@@ -224,6 +224,11 @@ const repoContainer = document.getElementById('repo-container');
 // Array of featured projects
 const featuredRepos = [
   {
+    name: 'NanoClip',
+    description: 'A file transfer and univeersal clipboard sharing platform that allows you to send files from device to device similar to AirDrop. ',
+    url: 'https://nanoclip.vercel.app'
+  },
+  {
     name: 'DSA File Explorers: Virtual File Management',
     description: 'A file management system with CLI and GUI built using Java.',
     url: 'https://github.com/nanadotam/DSA-File-Explorers'
