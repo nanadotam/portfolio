@@ -32,6 +32,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Add smooth scrolling functionality for navigation buttons
+  const navLinks = document.querySelectorAll('.menu-btn[data-target]');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-target');
+      const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+        // Close the menu if it's open
+        navButtons.classList.remove('active');
+        menuButton.textContent = 'menu';
+        
+        // Smooth scroll to the target section
+        targetSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
 });
 
 // Toggle the visibility of the navigation menu
